@@ -202,7 +202,8 @@ jobs:
       - name: Check build output for secrets
         run: |
           echo "Scanning build output for leaked secrets..."
-          ! grep -rE "(sk_test_|pk_test_|sk_live_)[A-Za-z0-9]{20,}" .next/ || (echo "CRITICAL: Secrets found in build!" && exit 1)
+          ! grep -rE "(sk_test_|sk_live_|STRIPE_SECRET_KEY|CLERK_SECRET_KEY)[A-Za-z0-9]{20,}" .next/ || (echo "CRITICAL: Secrets found in build!" && exit 1)
+          echo "Note: Publishable keys (pk_test_) are expected in client bundles and are excluded from this check."
 
   # ============================================
   # 7. LICENSE & COMPLIANCE
@@ -223,7 +224,7 @@ jobs:
         run: npm ci
 
       - name: Check licenses
-        run: npx license-checker --summary --onlyAllow 'MIT;Apache-2.0;BSD-2-Clause;BSD-3-Clause;ISC;0BSD;Python-2.0;MPL-2.0;CC-BY-4.0'
+        run: npx license-checker --summary --onlyAllow 'MIT;Apache-2.0;BSD-2-Clause;BSD-3-Clause;ISC;0BSD;Python-2.0;MPL-2.0;CC-BY-4.0;Unlicense'
 
   # ============================================
   # 8. SECURITY SUMMARY

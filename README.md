@@ -2,7 +2,7 @@
 
 A minimal, local-first web app demonstrating the **LAPP framework**: **Landing Page, Authentication, Payments, then Product**.
 
-Built with Next.js 14, Clerk, and Stripe - runs entirely on localhost:3001.
+Built with Next.js 14, Clerk, and Stripe - runs entirely on localhost:4000.
 
 ## Features
 

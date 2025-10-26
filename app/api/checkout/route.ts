@@ -4,11 +4,14 @@ import Stripe from "stripe";
 
 export const dynamic = 'force-dynamic';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-09-30.clover",
-});
+function getStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: "2025-09-30.clover",
+  });
+}
 
 export async function POST() {
+  const stripe = getStripe();
   try {
     const { userId } = await auth();
 

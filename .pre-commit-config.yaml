@@ -1,0 +1,28 @@
+repos:
+  # Secret scanning
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.2
+    hooks:
+      - id: gitleaks
+
+  # Detect private keys
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+
+  # Ensure .env files aren't committed
+  - repo: local
+    hooks:
+      - id: env-file-check
+        name: Check for .env files
+        entry: bash -c 'if git diff --cached --name-only | grep -E "\.env$|\.env\.local$"; then echo "ERROR: Attempting to commit .env file!"; exit 1; fi'
+        language: system
+        pass_filenames: false

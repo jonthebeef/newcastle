@@ -1,0 +1,52 @@
+# GitLeaks configuration for detecting secrets
+
+title = "LAPP Demo Security Configuration"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "clerk-secret-key"
+description = "Clerk Secret Key"
+regex = '''sk_test_[A-Za-z0-9]{40,}'''
+tags = ["key", "clerk"]
+
+[[rules]]
+id = "clerk-publishable-key"
+description = "Clerk Publishable Key"
+regex = '''pk_test_[A-Za-z0-9]{40,}'''
+tags = ["key", "clerk"]
+
+[[rules]]
+id = "stripe-secret-key"
+description = "Stripe Secret Key"
+regex = '''sk_test_[A-Za-z0-9]{90,}'''
+tags = ["key", "stripe", "secret"]
+
+[[rules]]
+id = "stripe-publishable-key"
+description = "Stripe Publishable Key"
+regex = '''pk_test_[A-Za-z0-9]{90,}'''
+tags = ["key", "stripe"]
+
+[[rules]]
+id = "stripe-webhook-secret"
+description = "Stripe Webhook Secret"
+regex = '''whsec_[A-Za-z0-9]{40,}'''
+tags = ["secret", "stripe", "webhook"]
+
+[allowlist]
+description = "Allowlist for safe patterns"
+paths = [
+  '''.env.local.example''',
+  '''README.md''',
+]
+regexes = [
+  '''pk_test_YOUR_KEY_HERE''',
+  '''sk_test_YOUR_KEY_HERE''',
+  '''whsec_YOUR_WEBHOOK_SECRET_HERE''',
+  '''price_YOUR_PRICE_ID_HERE''',
+  '''pk_test_\.\.\.''',
+  '''sk_test_\.\.\.''',
+  '''whsec_\.\.\.''',
+]

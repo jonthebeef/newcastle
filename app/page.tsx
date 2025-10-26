@@ -1,7 +1,11 @@
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
+import { isUserPaid } from "@/lib/clerk-helpers";
 
-export default function Home() {
+export default async function Home() {
+  const { userId } = await auth();
+  const isPaid = userId ? await isUserPaid(userId) : false;
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <nav className="p-4 flex justify-between items-center max-w-4xl mx-auto">
@@ -41,12 +45,21 @@ export default function Home() {
             </SignInButton>
           </SignedOut>
           <SignedIn>
-            <Link
-              href="/upgrade"
-              className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700"
-            >
-              Upgrade to Pro
-            </Link>
+            {isPaid ? (
+              <Link
+                href="/dashboard"
+                className="inline-block bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-700"
+              >
+                Go to Dashboard
+              </Link>
+            ) : (
+              <Link
+                href="/upgrade"
+                className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700"
+              >
+                Upgrade to Pro
+              </Link>
+            )}
           </SignedIn>
         </div>
 

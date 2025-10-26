@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Security headers
+  // Security headers (only in production)
   async headers() {
+    // Skip security headers in development to avoid CSP issues
+    if (process.env.NODE_ENV !== 'production') {
+      return [];
+    }
+
     return [
       {
         source: '/:path*',

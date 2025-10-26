@@ -243,3 +243,4 @@ MIT
 ---
 
 **🧠 This is a demo application for learning the LAPP framework. Not intended for production use without proper security review and enhancements.**
+

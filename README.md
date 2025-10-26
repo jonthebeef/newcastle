@@ -244,3 +244,5 @@ MIT
 
 **🧠 This is a demo application for learning the LAPP framework. Not intended for production use without proper security review and enhancements.**
 
+Built with comprehensive security CI/CD pipeline.
+
